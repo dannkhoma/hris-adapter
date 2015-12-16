@@ -13,7 +13,7 @@ public class PostAdapter {
 
     public Post save(org.hris.Post mohccPost) {
 
-        Post hwoPost = HwoWebServiceConsumer.consumeHwoPost(mohccPost.getPostId());
+        Post hwoPost = HwoWebServiceConsumer.getHwoPost(mohccPost.getPostId());
 
         if (hwoPost == null) {
             hwoPost = convert(mohccPost);

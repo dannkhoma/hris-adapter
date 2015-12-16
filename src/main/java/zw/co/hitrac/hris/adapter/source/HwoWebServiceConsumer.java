@@ -2,6 +2,7 @@ package zw.co.hitrac.hris.adapter.source;
 
 import org.springframework.web.client.RestTemplate;
 import zw.hitrac.hwo.domain.Post;
+import zw.hitrac.hwo.domain.StaffEstablishment;
 
 /**
  *
@@ -10,8 +11,10 @@ import zw.hitrac.hwo.domain.Post;
 public class HwoWebServiceConsumer {
 
     private static final RestTemplate restTemplate = new RestTemplate();
+    
+   
 
-    public static Post consumeHwoPost(String postId) {
+    public static Post getHwoPost(String postId) {
         Post hwoPost = restTemplate.getForObject("http://localhost:2507/hwo/posts/post/get_post/" + postId, Post.class);
         return hwoPost;
     }
@@ -20,5 +23,21 @@ public class HwoWebServiceConsumer {
         Post hwoPost = restTemplate.postForObject("http://localhost:2507/hwo/posts/post/save", post, Post.class);
         return hwoPost;
     }
+  public  static  StaffEstablishment  getHwoStaffEstablishment(String staffEstablishmentId){
+  StaffEstablishment hwoStaffEstablishment = restTemplate.getForObject("http://localhost:2507/hwo/staffEst/get_staffEst/get_staffEstablishment/" + staffEstablishmentId, StaffEstablishment.class);
+        return hwoStaffEstablishment;
+  
+  }
+    
+   public static StaffEstablishment saveHwoStaffEstablishment(StaffEstablishment staffEstablishment) {
+      
+     StaffEstablishment hwoStaffEstablishment = restTemplate.postForObject("http://localhost:2507/hwo/staffEstablishments/staffEstablishment/save",staffEstablishment,StaffEstablishment.class);       
+        return hwoStaffEstablishment;
+    }
+   
+   
+
+          
+   
 
 }
