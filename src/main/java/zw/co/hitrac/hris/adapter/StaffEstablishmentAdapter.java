@@ -1,6 +1,5 @@
 package zw.co.hitrac.hris.adapter;
 
-import org.hris.StationEstablishment;
 import zw.co.hitrac.hris.adapter.source.HwoWebServiceConsumer;
 import zw.hitrac.hwo.domain.Post;
 import zw.hitrac.hwo.domain.StaffEstablishment;
@@ -13,10 +12,9 @@ public class StaffEstablishmentAdapter {
     
     private static final StaffEstablishmentAdapter INSTANCE = new StaffEstablishmentAdapter();
     
-    public StaffEstablishment save(org.hris.StationEstablishment mohccStaffEstablishment) {
-        StationEstablishment mohccStationEstablishment = null;
+    public StaffEstablishment save(org.hris.StationEstablishment mohccStationEstablishment) {
         
-        StaffEstablishment hwoStaffEstablishment = HwoWebServiceConsumer.getHwoStaffEstablishment(mohccStationEstablishment.getStationEstablishmentId());
+        StaffEstablishment hwoStaffEstablishment = HwoWebServiceConsumer.findHwoStaffEstablishmentByMohccId(mohccStationEstablishment.getStationEstablishmentId());
         
         if (hwoStaffEstablishment == null) {
             hwoStaffEstablishment = convert(mohccStationEstablishment);
@@ -26,22 +24,36 @@ public class StaffEstablishmentAdapter {
     }
     
     private StaffEstablishment convert(org.hris.StationEstablishment mohccStationEstablishment) {
-        StaffEstablishment hwoStaffEstablishment = new StaffEstablishment();
         
         Post hwoPost = findHwoPost(mohccStationEstablishment.getPost());
+        StaffEstablishment hwoStaffEstablishment;
+        
         if (hwoPost != null) {
-            hwoStaffEstablishment.setPost(hwoPost);
+            hwoStaffEstablishment = setHwoStaffEstablishment(hwoPost, mohccStationEstablishment);
+        } else {
+            
+            hwoPost = PostAdapter.get().save(mohccStationEstablishment.getPost());
+            hwoStaffEstablishment = setHwoStaffEstablishment(hwoPost, mohccStationEstablishment);
+            
         }
         
-        hwoStaffEstablishment.setFilledPost(mohccStationEstablishment.getOccupiedPosts());
-        hwoStaffEstablishment.setTotalNumberOfPost(mohccStationEstablishment.getApprovedPosts());
-        hwoStaffEstablishment.setVacantPost(mohccStationEstablishment.getVacantPosts());
         return hwoStaffEstablishment;
     }
     
     private Post findHwoPost(org.hris.Post mohccPost) {
-        Post hwoPost = HwoWebServiceConsumer.getHwoPost(mohccPost.getPostId());
+        Post hwoPost = HwoWebServiceConsumer.findHwoPostByMohccPostId(mohccPost.getPostId());
         return hwoPost;
+    }
+    
+    private StaffEstablishment setHwoStaffEstablishment(Post hwoPost, org.hris.StationEstablishment mohccStationEstablishment) {
+        StaffEstablishment hwoStaffEstablishment = new StaffEstablishment();
+        
+        hwoStaffEstablishment.setPost(hwoPost);
+        hwoStaffEstablishment.setMohccUuid(mohccStationEstablishment.getStationEstablishmentId());
+        hwoStaffEstablishment.setFilledPost(mohccStationEstablishment.getOccupiedPosts());
+        hwoStaffEstablishment.setTotalNumberOfPost(mohccStationEstablishment.getApprovedPosts());
+        hwoStaffEstablishment.setVacantPost(mohccStationEstablishment.getVacantPosts());
+        return hwoStaffEstablishment;
     }
     
     public static StaffEstablishmentAdapter get() {

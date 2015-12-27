@@ -1,4 +1,3 @@
-
 package zw.co.hitrac.hris.adapter;
 
 import java.util.List;
@@ -10,14 +9,14 @@ import zw.co.hitrac.hris.adapter.source.HrisWebServiceClientFactory;
  * @author Tonderai Ndangana
  */
 public class StaffEstablishmentImporter {
-  
-    public static void  newPushStaffEstablishment (){
-        
+
+    public static void newPushStaffEstablishment() {
+
         List<StationEstablishment> staffEstablishments = HrisWebServiceClientFactory.getStationEstablishmentWebService().getStationEstablishments();
-        for (StationEstablishment StaffEstablishment : staffEstablishments) {
+        for (StationEstablishment staffEstablishment : staffEstablishments) {
             try {
-                       StaffEstablishmentAdapter.get().save(StaffEstablishment);
-                System.out.println("StaffEstablishment==" +StaffEstablishment.getStationEstablishmentId());
+                StaffEstablishmentAdapter.get().save(staffEstablishment);
+                System.out.println("StaffEstablishment==" + staffEstablishment.getStationEstablishmentId());
             } catch (Exception ex) {
                 ex.printStackTrace(System.out);
             }
@@ -25,6 +24,6 @@ public class StaffEstablishmentImporter {
     }
 
     public static void main(String[] args) {
-            newPushStaffEstablishment();
-  }
+        newPushStaffEstablishment();
+    }
 }

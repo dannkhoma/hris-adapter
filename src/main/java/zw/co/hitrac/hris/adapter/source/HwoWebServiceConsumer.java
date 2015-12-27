@@ -11,10 +11,8 @@ import zw.hitrac.hwo.domain.StaffEstablishment;
 public class HwoWebServiceConsumer {
 
     private static final RestTemplate restTemplate = new RestTemplate();
-    
-   
 
-    public static Post getHwoPost(String postId) {
+    public static Post findHwoPostByMohccPostId(String postId) {
         Post hwoPost = restTemplate.getForObject("http://localhost:2507/hwo/posts/post/get_post/" + postId, Post.class);
         return hwoPost;
     }
@@ -23,21 +21,17 @@ public class HwoWebServiceConsumer {
         Post hwoPost = restTemplate.postForObject("http://localhost:2507/hwo/posts/post/save", post, Post.class);
         return hwoPost;
     }
-  public  static  StaffEstablishment  getHwoStaffEstablishment(String staffEstablishmentId){
-  StaffEstablishment hwoStaffEstablishment = restTemplate.getForObject("http://localhost:2507/hwo/staffEst/get_staffEst/get_staffEstablishment/" + staffEstablishmentId, StaffEstablishment.class);
+
+    public static StaffEstablishment findHwoStaffEstablishmentByMohccId(String staffEstablishmentId) {
+        StaffEstablishment hwoStaffEstablishment = restTemplate.getForObject("http://localhost:2507/hwo/staffEstablishments/staffEstablishment/get_staffEstablishment/" + staffEstablishmentId, StaffEstablishment.class);
         return hwoStaffEstablishment;
-  
-  }
-    
-   public static StaffEstablishment saveHwoStaffEstablishment(StaffEstablishment staffEstablishment) {
-      
-     StaffEstablishment hwoStaffEstablishment = restTemplate.postForObject("http://localhost:2507/hwo/staffEstablishments/staffEstablishment/save",staffEstablishment,StaffEstablishment.class);       
+
+    }
+
+    public static StaffEstablishment saveHwoStaffEstablishment(StaffEstablishment staffEstablishment) {
+
+        StaffEstablishment hwoStaffEstablishment = restTemplate.postForObject("http://localhost:2507/hwo/staffEstablishments/staffEstablishment/save", staffEstablishment, StaffEstablishment.class);
         return hwoStaffEstablishment;
     }
-   
-   
-
-          
-   
 
 }
