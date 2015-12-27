@@ -26,7 +26,7 @@ public class PostAdapter {
         Post hwoPost = new Post();
         hwoPost.setMohccUuid(mohccPost.getPostId());
         hwoPost.setName(mohccPost.getName());
-        hwoPost.setDescription(mohccPost.getDescription());
+        hwoPost.setDescription(mohccPost.getName());
         hwoPost.setRetired(mohccPost.getRetired());
         return hwoPost;
     }

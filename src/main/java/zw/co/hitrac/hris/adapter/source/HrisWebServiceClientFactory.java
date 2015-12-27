@@ -2,6 +2,7 @@ package zw.co.hitrac.hris.adapter.source;
 
 import org.hris.client.soa.webservices.PostWebservice;
 import org.hris.client.soa.webservices.StationEstablishmentWebService;
+import org.hris.client.soa.webservices.StationWebService;
 import org.jboss.resteasy.client.jaxrs.BasicAuthentication;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
@@ -16,11 +17,14 @@ public class HrisWebServiceClientFactory {
     public static PostWebservice getPostWebservice() {
         return getTarget().proxy(PostWebservice.class);
     }
-    
-     public static StationEstablishmentWebService getStationEstablishmentWebService() {
+
+    public static StationWebService getStationWebservice() {
+        return getTarget().proxy(StationWebService.class);
+    }
+
+    public static StationEstablishmentWebService getStationEstablishmentWebService() {
         return getTarget().proxy(StationEstablishmentWebService.class);
     }
-            
 
     private static ResteasyWebTarget getTarget() {
         ResteasyClient client = new ResteasyClientBuilder().build();
